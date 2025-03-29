@@ -66,6 +66,28 @@ python add_person.py --image_path images/new_person.jpg --name "John Doe"
 
 -pickle
 
+
+## ⚠️ Known Issues & TPU Dependency
+# ❓ Why Does This Project Work Only on v2-8 TPU in Google Colab?
+-This project currently runs only on v2-8 TPU in Colab due to:
+
+-TensorFlow TPU Optimizations
+
+-The face recognition model may include TPU-optimized operations.
+
+-TPUs require a specific TensorFlow version (>=2.8).
+
+-Dlib + CUDA Conflicts with TPU
+
+-The face_recognition library relies on dlib, which is optimized for CUDA GPUs.
+
+-TPUs do not support CUDA, causing compatibility issues.
+
+-Model Checkpoints Using TPU Metadata
+
+-If the .pkl model file was trained on a TPU, it may store TPU-specific metadata.
+
+-This can make the model incompatible with CPU/GPU environments.
 ## 👨‍💻 Author
 
 **Developed by Allam Abdelmawgoud Ahmed 🚀 and hadeer bader**
