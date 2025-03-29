@@ -1,0 +1,6 @@
+opencv-python
+numpy==1.26.4
+torch
+cmake
+dlib -f https://pypi.org/simple
+face_recognition -f https://pypi.org/simple
