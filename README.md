@@ -54,6 +54,8 @@ python recognize_faces.py --test_path images/test
 ```
 python add_person.py --image_path images/new_person.jpg --name "John Doe"
 ```
+## 📌 Recogntion Example 
+![Face Recognition Example](/recognized_image.jpg)
 
 ## 📌 Dependencies
 -opencv-python
