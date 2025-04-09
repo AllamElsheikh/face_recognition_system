@@ -26,6 +26,7 @@ def train_face_recognition_model(train_path, model_save_path="face_encodings.pkl
     # Prepare known encodings and names
     known_encodings = []
     known_names = []
+    known_ids = []
     known_dir = train_path
 
     # Read known images and extract their encodings
@@ -35,10 +36,10 @@ def train_face_recognition_model(train_path, model_save_path="face_encodings.pkl
         if img_enc:  # Check if encodings were found
             known_encodings.append(img_enc[0])
             known_names.append(file.split('.')[0])  # Save the name without file extension
-
+            known_ids.append(len(known_names))
     # Save the model (encodings and names) to a file
     with open(model_save_path, 'wb') as file:
-        pickle.dump((known_encodings, known_names), file)
+        pickle.dump((known_encodings, known_names, known_ids), file)
     
     print(f"Model saved to {model_save_path}")
 
