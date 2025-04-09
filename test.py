@@ -5,6 +5,9 @@ import pickle
 import argparse
 import time
 from google.colab.patches import cv2_imshow
+from datetime import datetime
+
+
 
 def read_img(path):
     """Load and resize an image to a fixed width of 500 pixels."""
@@ -17,18 +20,20 @@ def read_img(path):
     height = int(h * ratio)
     return cv2.resize(img, (width, height))
 
-def test_face_recognition_model(test_path, model_save_path, output_path):
+def test_face_recognition_model(test_path, model_save_path, output_path , times =  "time_of_testing.pkl"):
     """Test a trained face recognition model and save recognized images."""
     
     # Load trained encodings and names
     with open(model_save_path, 'rb') as file:
-        known_encodings, known_names = pickle.load(file)
+        known_encodings, known_names, known_ids = pickle.load(file)
     
     print("✅ Model loaded successfully!")
 
     # Ensure output directory exists
     os.makedirs(output_path, exist_ok=True)
-
+    names = []
+    ids = []
+    timeings = []
     # Process images in test directory
     for file in os.listdir(test_path):
         img_path = os.path.join(test_path, file)
@@ -43,9 +48,15 @@ def test_face_recognition_model(test_path, model_save_path, output_path):
                 results = face_recognition.compare_faces(known_encodings, img_enc)
                 
                 name = "Unknown"
+                id = "unknown"
                 for i, match in enumerate(results):
                     if match:
                         name = known_names[i]
+                        id = known_ids[i]
+                        names.append(name)  # Save the name without file extension
+                        ids.append(id)
+                        timeings.append(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                       
                         break
                 
                 # Draw a bounding box around the face
@@ -60,9 +71,18 @@ def test_face_recognition_model(test_path, model_save_path, output_path):
                 time.sleep(3)
 
                 # Save recognized image
+              #  start_time = time.time()
+
                 output_img_path = os.path.join(output_path, f"recognized_{file}")
                 cv2.imwrite(output_img_path, img)
                 print(f"✅ Saved recognized image: {output_img_path}")
+                print(f"the person is : {name}")
+                print(f"the id is : {id}")
+                names.append(name)  # Save the name without file extension
+                ids.append(id)
+                timeings.append(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                with open(times, 'wb') as file:
+                  pickle.dump((names, ids, timeings), file)
 
             else:
                 print(f"⚠️ No faces detected in {file}")
