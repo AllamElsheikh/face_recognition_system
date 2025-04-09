@@ -22,11 +22,11 @@ def add_new_person(image_path, person_name, model_save_path="face_recognition_mo
     # Load the saved model (known_encodings and known_names)
     if os.path.exists(model_save_path):
         with open(model_save_path, 'rb') as file:
-            known_encodings, known_names = pickle.load(file)
+            known_encodings, known_names, known_ids = pickle.load(file)
         print("✅ Model loaded successfully!")
     else:
         print("⚠️ No existing model found. Creating a new one.")
-        known_encodings, known_names = [], []
+        known_encodings, known_names , known_ids = [], [] , []
 
     # Read and encode the new image
     img = read_img(image_path)
@@ -37,10 +37,10 @@ def add_new_person(image_path, person_name, model_save_path="face_recognition_mo
         img_encoding = img_encodings[0]  # Get the first face encoding
         known_encodings.append(img_encoding)  # Add encoding to the list
         known_names.append(person_name)       # Add name to the list
-
+        known_ids.append(len(known_names))
         # Save the updated model
         with open(model_save_path, 'wb') as file:
-            pickle.dump((known_encodings, known_names), file)
+            pickle.dump((known_encodings, known_names, known_ids), file)
 
         # Draw a bounding box around the detected face
         locations = face_recognition.face_locations(img)
