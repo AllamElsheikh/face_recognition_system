@@ -1,8 +1,32 @@
 # 🏆 Face Recognition System  
 
-A simple yet effective **face recognition system** using OpenCV and `face_recognition`. This project allows you to **train** a model with known faces, **recognize** faces in test images, and **dynamically add new people** to the model.
+TThis project implements a **Face Recognition System** that can detect and classify faces in images. It utilizes machine learning models for **real vs. fake face** detection. The system is designed to identify individuals and determine if a face is real or manipulated using deep learning techniques.
 
 ---
+## Features
+
+- **Face Detection**: Detects faces in images and assigns labels to them.
+- **Real vs. Fake Classification**: Classifies faces as either **real** or **fake** to prevent takeing attendance using images from phones .
+- **Custom Training**: Trains a YOLO model on custom datasets for face recognition.
+
+
+# Prerequisites
+
+Before running the project, ensure that the following are installed on your environment:
+
+- Python 3.x
+- pip (Python package installer)
+- Required libraries:
+  - `ultralytics` (YOLO)
+  - `torch`
+  - `opencv-python`
+  - `matplotlib`
+  - `pillow`
+
+You can install the required libraries using the following command:
+```bash
+pip install requirments.txt
+```
 
 ## 📂 Project Structure  
 ```
@@ -46,7 +70,7 @@ python train_faces.py --train_path images/train
 2️⃣ Recognize Faces 
 
 ```
-python recognize_faces.py --test_path images/test
+python test_using_fake_or_real.py --test_path images/test
 
 ```
 
